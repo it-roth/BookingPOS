@@ -702,7 +702,7 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
-                aspectRatio: 1,
+                aspectRatio: 1.2,
                 plugins: {
                     legend: {
                         position: 'right',
@@ -737,12 +737,12 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
-                aspectRatio: 1,
+                aspectRatio: 1.2,
                 plugins: {
                     legend: {
                         position: 'right',
                         labels: {
-                            boxWidth: 12
+                            boxWidth: 10
                         }
                     }
                 }

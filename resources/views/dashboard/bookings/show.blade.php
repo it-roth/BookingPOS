@@ -13,9 +13,6 @@
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Booking #{{ $booking->booking_number ?? 'N/A' }}</h5>
                     <div>
-                        <button type="button" class="btn btn-outline-secondary btn-sm print-booking" data-booking-id="{{ $booking->id }}">
-                            <i class="fas fa-print me-1"></i> Print
-                        </button>
                         <a href="{{ route('dashboard.reports.bookings') }}" class="btn btn-outline-primary btn-sm ms-2">
                             <i class="fas fa-arrow-left me-1"></i> Back to List
                         </a>

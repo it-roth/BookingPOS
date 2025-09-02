@@ -74,45 +74,47 @@
 <div class="row">
     <div class="col-12">
         <div class="card shadow-sm">
-            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
-                <h5 class="mb-0 fw-bold text-primary">
-                    <i class="fas fa-theater-masks me-2"></i>Halls List
-                </h5>
-                <div class="d-flex">
-                    <div class="dropdown me-2">
-                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="hallTypeFilter" data-bs-toggle="dropdown" aria-expanded="false">
-                            @if(request()->has('hall_type'))
-                                {{ request('hall_type') }}
-                            @else
-                                All Types
-                            @endif
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="hallTypeFilter">
-                            <li><a class="dropdown-item" href="{{ route('dashboard.halls') }}">All Types</a></li>
-                            <li><a class="dropdown-item" href="{{ route('dashboard.halls', ['hall_type' => 'Standard']) }}">Standard</a></li>
-                            <li><a class="dropdown-item" href="{{ route('dashboard.halls', ['hall_type' => 'VIP']) }}">VIP</a></li>
-                            <li><a class="dropdown-item" href="{{ route('dashboard.halls', ['hall_type' => 'IMAX']) }}">IMAX</a></li>
-                            <li><a class="dropdown-item" href="{{ route('dashboard.halls', ['hall_type' => '3D']) }}">3D</a></li>
-                            <li><a class="dropdown-item" href="{{ route('dashboard.halls', ['hall_type' => '4DX']) }}">4DX</a></li>
-                        </ul>
+            <div class="card-header bg-white py-3">
+                <div class="d-flex flex-column flex-md-row justify-content-end align-items-start align-items-md-center gap-3">
+                    <h5 class="mb-0 fw-bold text-primary me-auto">
+                        <i class="fas fa-theater-masks me-2"></i>Halls List
+                    </h5>
+                    <div class="d-flex flex-column flex-sm-row gap-2">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle w-100 w-sm-auto" type="button" id="hallTypeFilter" data-bs-toggle="dropdown" aria-expanded="false">
+                                @if(request()->has('hall_type'))
+                                    {{ request('hall_type') }}
+                                @else
+                                    All Types
+                                @endif
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="hallTypeFilter">
+                                <li><a class="dropdown-item" href="{{ route('dashboard.halls') }}">All Types</a></li>
+                                <li><a class="dropdown-item" href="{{ route('dashboard.halls', ['hall_type' => 'Standard']) }}">Standard</a></li>
+                                <li><a class="dropdown-item" href="{{ route('dashboard.halls', ['hall_type' => 'VIP']) }}">VIP</a></li>
+                                <li><a class="dropdown-item" href="{{ route('dashboard.halls', ['hall_type' => 'IMAX']) }}">IMAX</a></li>
+                                <li><a class="dropdown-item" href="{{ route('dashboard.halls', ['hall_type' => '3D']) }}">3D</a></li>
+                                <li><a class="dropdown-item" href="{{ route('dashboard.halls', ['hall_type' => '4DX']) }}">4DX</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle w-100 w-sm-auto" type="button" id="statusFilter" data-bs-toggle="dropdown" aria-expanded="false">
+                                @if(request()->has('is_active'))
+                                    {{ request('is_active') ? 'Active' : 'Inactive' }}
+                                @else
+                                    All Status
+                                @endif
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="statusFilter">
+                                <li><a class="dropdown-item" href="{{ route('dashboard.halls') }}">All Status</a></li>
+                                <li><a class="dropdown-item" href="{{ route('dashboard.halls', ['is_active' => 1]) }}">Active</a></li>
+                                <li><a class="dropdown-item" href="{{ route('dashboard.halls', ['is_active' => 0]) }}">Inactive</a></li>
+                            </ul>
+                        </div>
+                        <a href="{{ route('halls.create') }}" class="btn btn-success">
+                            <i class="fas fa-plus me-1"></i> New Hall
+                        </a>
                     </div>
-                    <div class="dropdown me-2">
-                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="statusFilter" data-bs-toggle="dropdown" aria-expanded="false">
-                            @if(request()->has('is_active'))
-                                {{ request('is_active') ? 'Active' : 'Inactive' }}
-                            @else
-                                All Status
-                            @endif
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="statusFilter">
-                            <li><a class="dropdown-item" href="{{ route('dashboard.halls') }}">All Status</a></li>
-                            <li><a class="dropdown-item" href="{{ route('dashboard.halls', ['is_active' => 1]) }}">Active</a></li>
-                            <li><a class="dropdown-item" href="{{ route('dashboard.halls', ['is_active' => 0]) }}">Inactive</a></li>
-                        </ul>
-                    </div>
-                    <a href="{{ route('halls.create') }}" class="btn btn-sm btn-success">
-                        <i class="fas fa-plus me-1"></i> New Hall
-                    </a>
                 </div>
             </div>
             <div class="card-body p-0 position-relative">
@@ -135,19 +137,31 @@
                         <thead class="table-light">
                             <tr>
                                 <th>Name</th>
-                                <th>Type</th>
-                                <th>Capacity</th>
+                                <th class="d-none d-md-table-cell">Type</th>
+                                <th class="d-none d-lg-table-cell">Capacity</th>
                                 <th>Seats Count</th>
-                                <th>Status</th>
+                                <th class="d-none d-md-table-cell">Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="halls-table-body">
                             @forelse($halls as $hall)
                             <tr>
-                                <td class="fw-medium">{{ $hall->name }}</td>
-                                <td><span class="badge bg-primary">{{ $hall->hall_type }}</span></td>
-                                <td>{{ $hall->capacity }} seats</td>
+                                <td class="fw-medium" data-label="Name">
+                                    <div>{{ $hall->name }}</div>
+                                    <small class="text-muted d-md-none">
+                                        {{ $hall->hall_type }} • {{ $hall->capacity }} seats •
+                                        @if($hall->is_active)
+                                            <span class="text-success">Active</span>
+                                        @else
+                                            <span class="text-danger">Inactive</span>
+                                        @endif
+                                    </small>
+                                </td>
+                                <td class="d-none d-md-table-cell" data-label="Type">
+                                    <span class="badge bg-primary">{{ $hall->hall_type }}</span>
+                                </td>
+                                <td class="d-none d-lg-table-cell" data-label="Capacity">{{ $hall->capacity }} seats</td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <span class="me-2">{{ $hall->seats->count() }}</span>
@@ -159,25 +173,25 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>
+                                <td class="d-none d-md-table-cell" data-label="Status">
                                     @if($hall->is_active)
                                         <span class="badge bg-success">Active</span>
                                     @else
                                         <span class="badge bg-danger">Inactive</span>
                                     @endif
                                 </td>
-                                <td>
-                                    <div class="btn-group">
-                                        <a href="{{ route('halls.show', $hall->id) }}" class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details">
+                                <td data-label="Actions">
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{{ route('halls.show', $hall->id) }}" class="btn btn-outline-primary" data-bs-toggle="tooltip" title="View Details">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('halls.edit', $hall->id) }}" class="btn btn-sm btn-outline-warning" data-bs-toggle="tooltip" title="Edit">
+                                        <a href="{{ route('halls.edit', $hall->id) }}" class="btn btn-outline-warning" data-bs-toggle="tooltip" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a href="{{ route('seats.create', ['hall_id' => $hall->id]) }}" class="btn btn-sm btn-outline-success" data-bs-toggle="tooltip" title="Add Seats">
+                                        <a href="{{ route('seats.create', ['hall_id' => $hall->id]) }}" class="btn btn-outline-success" data-bs-toggle="tooltip" title="Add Seats">
                                             <i class="fas fa-chair"></i>
                                         </a>
-                                        <button type="submit" form="delete-form-{{ $hall->id }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this hall?')" data-bs-toggle="tooltip" title="Delete">
+                                        <button type="submit" form="delete-form-{{ $hall->id }}" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete this hall?')" data-bs-toggle="tooltip" title="Delete">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                         <form id="delete-form-{{ $hall->id }}" action="{{ route('halls.destroy', $hall->id) }}" method="POST" class="d-none">

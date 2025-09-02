@@ -188,15 +188,54 @@
             width: var(--sidebar-collapsed-width);
         }
 
-        /* Small screens - Mobile */
+        /* Small screens - Mobile - Full Screen Sidebar */
         @media (max-width: 767px) {
             .sidebar {
-                width: 100%;
-                left: -100%;
+                width: 100vw !important;
+                height: 100vh !important;
+                left: -100% !important;
+                top: 0 !important;
+                z-index: 9999 !important;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease, left 0.3s ease;
             }
 
             .sidebar.show {
-                left: 0;
+                left: 0 !important;
+                transform: translateX(0) !important;
+            }
+
+            /* Hide main content when sidebar is open on mobile */
+            body.sidebar-open .main-content {
+                display: none;
+            }
+
+            body.sidebar-open {
+                overflow: hidden;
+            }
+
+            /* Mobile close button */
+            .mobile-close-btn {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                background: rgba(255, 255, 255, 0.1);
+                border: none;
+                color: white;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                z-index: 10;
+            }
+
+            .mobile-close-btn:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: scale(1.1);
             }
         }
 
@@ -280,10 +319,12 @@
         .sidebar-nav {
             padding: 1rem 0;
         }
-        
+
         .nav-section {
-            padding: 0 1rem;
+            padding: 0;
             margin-bottom: 0.5rem;
+            overflow: visible;
+            position: relative;
         }
         
         .nav-header {
@@ -293,6 +334,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             padding: 0.75rem 1rem;
+            margin: 0;
         }
         
         .sidebar-collapsed .nav-header {
@@ -303,25 +345,39 @@
             color: rgba(255, 255, 255, 0.7);
             display: flex;
             align-items: center;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 0;
+            padding-left: 1rem;
+            padding-right: 1rem;
             margin: 0.1rem 0;
-            border-radius: 0.3rem;
-            transition: all 0.2s;
+            border-radius: 0;
+            transition: all 0.3s ease;
             white-space: nowrap;
+            text-decoration: none;
+            position: relative;
+            width: 100vw;
+            max-width: 100%;
+            box-sizing: border-box;
         }
-        
+
+        /* Force full width on mobile */
+        @media (max-width: 767px) {
+            .nav-link {
+                width: 100vw;
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+
         .nav-link:hover {
             color: #fff;
             background: rgba(255, 255, 255, 0.1);
-            width: calc(var(--sidebar-width) + 20px);
-            margin-right: -20px;
+            transform: none;
         }
-        
+
         .nav-link.active {
             color: #fff;
             background-color: var(--primary);
-            width: calc(var(--sidebar-width) + 20px);
-            margin-right: -20px;
+            transform: none;
         }
         
         .nav-link i {
@@ -920,6 +976,482 @@
                 height: 35px;
             }
         }
+
+        /* ========================================
+           COMPREHENSIVE RESPONSIVE STYLES
+           ======================================== */
+
+        /* Mobile-First Button Improvements */
+        @media (max-width: 767px) {
+            /* Button responsive improvements */
+            .btn {
+                font-size: 0.875rem;
+                padding: 0.5rem 0.75rem;
+                min-height: 44px; /* Touch-friendly minimum */
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .btn-sm {
+                font-size: 0.75rem;
+                padding: 0.375rem 0.5rem;
+                min-height: 36px;
+            }
+
+            .btn-lg {
+                font-size: 1rem;
+                padding: 0.75rem 1rem;
+                min-height: 52px;
+            }
+
+            /* Button groups stack vertically on mobile */
+            .btn-group {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                gap: 0.25rem;
+            }
+
+            .btn-group .btn {
+                width: 100%;
+                margin: 0;
+                border-radius: 0.375rem !important;
+            }
+
+            /* Action buttons in tables */
+            .btn-group-sm .btn {
+                min-height: 32px;
+                padding: 0.25rem 0.5rem;
+                font-size: 0.7rem;
+            }
+
+            /* Table responsive improvements */
+            .table-responsive {
+                border: none;
+                box-shadow: none;
+                margin: 0 -0.5rem;
+            }
+
+            .table {
+                font-size: 0.75rem;
+                margin-bottom: 0;
+            }
+
+            .table th,
+            .table td {
+                padding: 0.5rem 0.25rem;
+                vertical-align: middle;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 120px;
+            }
+
+            .table th {
+                font-size: 0.7rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            /* Hide less important columns on mobile */
+            .table .d-none.d-md-table-cell,
+            .table .d-none.d-lg-table-cell {
+                display: none !important;
+            }
+
+            /* Progress bars in tables */
+            .progress {
+                height: 4px !important;
+                width: 60px !important;
+            }
+
+            /* Badges in tables */
+            .badge {
+                font-size: 0.6rem;
+                padding: 0.25rem 0.4rem;
+            }
+
+            /* Card improvements */
+            .card {
+                margin-bottom: 1rem;
+                border-radius: 0.5rem;
+            }
+
+            .card-header {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .card-body {
+                padding: 1rem;
+            }
+
+            /* Form improvements */
+            .form-control,
+            .form-select {
+                font-size: 1rem; /* Prevent zoom on iOS */
+                padding: 0.75rem;
+                min-height: 44px;
+            }
+
+            .form-label {
+                font-size: 0.875rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+            }
+
+            /* Modal improvements */
+            .modal-dialog {
+                margin: 0.5rem;
+                max-width: calc(100% - 1rem);
+            }
+
+            .modal-content {
+                border-radius: 0.75rem;
+            }
+
+            .modal-header {
+                padding: 1rem;
+                border-bottom: 1px solid #e9ecef;
+            }
+
+            .modal-body {
+                padding: 1rem;
+            }
+
+            .modal-footer {
+                padding: 1rem;
+                border-top: 1px solid #e9ecef;
+            }
+
+            /* Alert improvements */
+            .alert {
+                font-size: 0.875rem;
+                padding: 0.75rem 1rem;
+                margin-bottom: 1rem;
+                border-radius: 0.5rem;
+            }
+
+            /* Dashboard Cards Mobile Improvements */
+            .stat-card {
+                padding: 1rem !important;
+                min-height: 140px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .stat-icon {
+                width: 35px !important;
+                height: 35px !important;
+                margin-bottom: 0.75rem !important;
+            }
+
+            .stat-icon i {
+                font-size: 1rem !important;
+            }
+
+            .stat-title {
+                font-size: 0.7rem !important;
+                margin-bottom: 0.25rem !important;
+            }
+
+            .stat-value {
+                font-size: 1.5rem !important;
+                font-weight: 700;
+                margin: 0.25rem 0 !important;
+            }
+
+            /* Welcome card mobile */
+            .welcome-card .card-body {
+                padding: 1rem !important;
+            }
+
+            .welcome-card h4 {
+                font-size: 1.1rem !important;
+                margin-bottom: 0.75rem !important;
+            }
+
+            .welcome-card p {
+                font-size: 0.85rem !important;
+                margin-bottom: 1rem !important;
+            }
+
+            /* Container improvements */
+            .container-fluid {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+            }
+
+            /* Row improvements */
+            .row {
+                margin-left: -0.375rem !important;
+                margin-right: -0.375rem !important;
+            }
+
+            .row > * {
+                padding-left: 0.375rem !important;
+                padding-right: 0.375rem !important;
+            }
+
+            /* Card improvements */
+            .card {
+                border-radius: 0.5rem !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+            }
+
+            .card-header {
+                padding: 0.75rem 1rem !important;
+                font-size: 0.9rem !important;
+                border-bottom: 1px solid #e9ecef !important;
+            }
+
+            .card-body {
+                padding: 1rem !important;
+            }
+
+            /* Quick actions mobile */
+            .quick-actions .card-body {
+                padding: 0.75rem !important;
+            }
+
+            .quick-actions .btn {
+                padding: 0.5rem 0.75rem !important;
+                font-size: 0.8rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+
+            /* Chart containers */
+            .chart-container {
+                height: 250px !important;
+                padding: 0.5rem !important;
+            }
+
+            /* Recent activities */
+            .activity-item {
+                padding: 0.75rem !important;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .activity-item:last-child {
+                border-bottom: none;
+            }
+
+            /* List group improvements */
+            .list-group-item {
+                padding: 0.75rem !important;
+                font-size: 0.85rem !important;
+            }
+
+            /* Badge improvements */
+            .badge {
+                font-size: 0.65rem !important;
+                padding: 0.25rem 0.4rem !important;
+            }
+
+            /* Text improvements */
+            h1, h2, h3, h4, h5, h6 {
+                line-height: 1.3 !important;
+            }
+
+            small, .small {
+                font-size: 0.75rem !important;
+            }
+
+            /* Spacing improvements */
+            .mb-4 {
+                margin-bottom: 1rem !important;
+            }
+
+            .mt-3 {
+                margin-top: 0.75rem !important;
+            }
+
+            .p-4 {
+                padding: 1rem !important;
+            }
+
+            /* Grid improvements */
+            .col-6 {
+                flex: 0 0 50% !important;
+                max-width: 50% !important;
+            }
+
+            /* Ensure proper spacing */
+            .g-3 > * {
+                padding: 0.375rem !important;
+            }
+        }
+
+        /* Tablet responsive improvements */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .stat-card {
+                padding: 1.25rem !important;
+                min-height: 160px;
+            }
+
+            .stat-icon {
+                width: 40px !important;
+                height: 40px !important;
+            }
+
+            .stat-icon i {
+                font-size: 1.1rem !important;
+            }
+
+            .stat-value {
+                font-size: 1.75rem !important;
+            }
+
+            .container-fluid {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+        }
+
+        /* Desktop improvements */
+        @media (min-width: 992px) {
+            .stat-card {
+                padding: 1.5rem !important;
+                min-height: 180px;
+            }
+
+            .stat-icon {
+                width: 45px !important;
+                height: 45px !important;
+            }
+
+            .stat-icon i {
+                font-size: 1.25rem !important;
+            }
+
+            .stat-value {
+                font-size: 2rem !important;
+            }
+        }
+
+        /* ========================================
+           BUTTON HOVER EFFECTS & IMPROVEMENTS
+           ======================================== */
+
+        /* Welcome card button improvements */
+        .welcome-card .btn {
+            transition: all 0.3s ease;
+            border-width: 2px;
+            font-weight: 500;
+        }
+
+        .welcome-card .btn-primary {
+            background-color: #007bff !important;
+            border-color: #007bff !important;
+            color: white !important;
+        }
+
+        .welcome-card .btn-primary:hover {
+            background-color: #0056b3 !important;
+            border-color: #0056b3 !important;
+            color: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        }
+
+        .welcome-card .btn-outline-light {
+            background-color: white !important;
+            border-color: white !important;
+            color: black !important;
+        }
+
+        .welcome-card .btn-outline-light:hover {
+            background-color: #f8f9fa !important;
+            border-color: #f8f9fa !important;
+            color: black !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* General button hover improvements */
+        .btn {
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-outline-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-sm:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Action buttons hover */
+        .actions-container {
+            transition: all 0.3s ease;
+        }
+
+        .actions-container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Table button hover */
+        .table .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* ========================================
+           RESPONSIVE TABLE IMPROVEMENTS
+           ======================================== */
+
+        /* Recent Movies & Hall Status Tables */
+        @media (max-width: 767px) {
+            /* Hide less important columns on mobile */
+            .recent-table .d-none.d-md-table-cell {
+                display: none !important;
+            }
+
+            .recent-table th,
+            .recent-table td {
+                padding: 0.5rem 0.25rem;
+                font-size: 0.8rem;
+                vertical-align: middle;
+            }
+
+            .recent-table .fw-medium {
+                font-size: 0.85rem;
+            }
+
+            .recent-table .badge {
+                font-size: 0.65rem;
+                padding: 0.2rem 0.4rem;
+            }
+
+            /* Card header responsive */
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start !important;
+                gap: 0.5rem;
+            }
+
+            .card-header .btn {
+                align-self: flex-end;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .recent-table th,
+            .recent-table td {
+                padding: 0.6rem 0.4rem;
+                font-size: 0.85rem;
+            }
+        }
     </style>
     @yield('styles')
 </head>
@@ -927,6 +1459,12 @@
     <div id="app" class="app-container">
         <!-- Sidebar -->
         <aside class="sidebar">
+            <!-- Mobile Close Button -->
+            <button class="mobile-close-btn d-md-none" onclick="closeMobileSidebar()">
+                <i class="fas fa-arrow-right"></i>
+
+            </button>
+
             <div class="logo-container text-center py-4">
                 <a href="{{ route('dashboard') }}" class="logo d-flex flex-column align-items-center text-decoration-none">
                     <img src="{{ asset('images/logo.png') }}" alt="RD Logo" class="logo-image mb-3">
@@ -1128,16 +1666,17 @@
             // Update layout based on screen size
             function updateLayout() {
                 if (isMobile()) {
-                    // Mobile layout
+                    // Mobile layout - reset desktop states
                     sidebar.classList.remove('collapsed');
                     document.body.classList.remove('sidebar-collapsed');
                     if (app) {
                         app.classList.remove('sidebar-collapsed');
                     }
                 } else {
-                    // Desktop layout
+                    // Desktop layout - reset mobile states
                     sidebar.classList.remove('show');
                     overlay.classList.remove('show');
+                    document.body.classList.remove('sidebar-open');
                     document.body.style.overflow = '';
                 }
             }
@@ -1145,10 +1684,22 @@
             // Toggle sidebar function
             function toggleSidebar() {
                 if (isMobile()) {
-                    // Mobile: Show/hide sidebar with overlay
-                    sidebar.classList.toggle('show');
-                    overlay.classList.toggle('show');
-                    document.body.style.overflow = sidebar.classList.contains('show') ? 'hidden' : '';
+                    // Mobile: Show/hide sidebar full screen
+                    const isShowing = sidebar.classList.contains('show');
+
+                    if (isShowing) {
+                        // Hide sidebar
+                        sidebar.classList.remove('show');
+                        document.body.classList.remove('sidebar-open');
+                        document.body.style.overflow = '';
+                        overlay.classList.remove('show');
+                    } else {
+                        // Show sidebar full screen
+                        sidebar.classList.add('show');
+                        document.body.classList.add('sidebar-open');
+                        document.body.style.overflow = 'hidden';
+                        overlay.classList.add('show');
+                    }
                 } else {
                     // Desktop: Collapse/expand sidebar
                     sidebar.classList.toggle('collapsed');
@@ -1159,11 +1710,12 @@
                 }
             }
 
-            // Close mobile sidebar
-            function closeMobileSidebar() {
+            // Close mobile sidebar - make it globally accessible
+            window.closeMobileSidebar = function() {
                 if (isMobile()) {
                     sidebar.classList.remove('show');
                     overlay.classList.remove('show');
+                    document.body.classList.remove('sidebar-open');
                     document.body.style.overflow = '';
                 }
             }
@@ -1178,13 +1730,13 @@
 
             // Close mobile sidebar when clicking overlay
             if (overlay) {
-                overlay.addEventListener('click', closeMobileSidebar);
+                overlay.addEventListener('click', window.closeMobileSidebar);
             }
 
             // Close mobile sidebar when clicking nav links
             const navLinks = document.querySelectorAll('.sidebar .nav-link');
             navLinks.forEach(link => {
-                link.addEventListener('click', closeMobileSidebar);
+                link.addEventListener('click', window.closeMobileSidebar);
             });
 
             // Handle window resize
@@ -1199,7 +1751,7 @@
             // Handle escape key to close mobile sidebar
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
-                    closeMobileSidebar();
+                    window.closeMobileSidebar();
                 }
             });
 

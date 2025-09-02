@@ -13,17 +13,17 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="card welcome-card">
-            <div class="card-body p-4">
+            <div class="card-body p-3 p-md-4">
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <h4 class="fw-bold mb-3">Welcome to TOS-MERL RG System</h4>
                         <p class="text-muted">Manage your operations efficiently with our comprehensive management system. Here's an overview of your current data.</p>
                         <div class="d-flex flex-column flex-sm-row gap-2 mt-3">
-                            <a href="#quick-actions" class="btn btn-primary">
-                                <i class="fas fa-plus me-2"></i> Quick Actions
+                            <a href="#quick-actions" class="btn btn-primary btn-sm">
+                                <i class="fas fa-plus me-1 me-md-2"></i> Quick Actions
                             </a>
-                            <a href="{{ route('dashboard.reports.bookings') }}" class="btn btn-outline-secondary">
-                                <i class="fas fa-chart-bar me-2"></i> View Reports
+                            <a href="{{ route('dashboard.reports.bookings') }}" class="btn btn-outline-light btn-sm" style="background-color: white; border-color: white; color: black;">
+                                <i class="fas fa-chart-bar me-1 me-md-2"></i> View Reports
                             </a>
                         </div>
                     </div>
@@ -37,32 +37,33 @@
 </div>
 
 <!-- Stats Cards -->
-<div class="row g-3 mb-4">
+<div class="row g-2 g-md-3 mb-4">
     <div class="col-6 col-md-4 col-xl-3">
-        <div class="stat-card">
+        <div class="stat-card h-100">
             <div class="stat-icon">
                 <i class="fas fa-film"></i>
             </div>
             <h6 class="stat-title">Movies</h6>
             <h3 class="stat-value">{{ \App\Models\Movie::count() }}</h3>
-            <div class="d-flex justify-content-between align-items-center mt-3">
-                <small class="text-muted">{{ \App\Models\Movie::where('is_showing', true)->count() }} showing now</small>
+            <div class="d-flex justify-content-between align-items-center mt-auto">
+                <small class="text-muted d-none d-sm-block">{{ \App\Models\Movie::where('is_showing', true)->count() }} showing now</small>
+                <small class="text-muted d-sm-none">{{ \App\Models\Movie::where('is_showing', true)->count() }} showing</small>
                 <a href="{{ route('dashboard.movies') }}" class="text-primary">
                     <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
         </div>
     </div>
-    
+
     <div class="col-6 col-md-4 col-xl-3">
-        <div class="stat-card" style="border-left-color: var(--success);">
+        <div class="stat-card h-100" style="border-left-color: var(--success);">
             <div class="stat-icon" style="background-color: rgba(58, 196, 125, 0.1); color: var(--success);">
                 <i class="fas fa-building"></i>
             </div>
             <h6 class="stat-title">Halls</h6>
             <h3 class="stat-value">{{ \App\Models\Hall::count() }}</h3>
-            <div class="d-flex justify-content-between align-items-center mt-3">
-                <small class="text-muted d-none d-sm-block">{{ \App\Models\Hall::where('is_active', true)->count() }} active halls</small>
+            <div class="d-flex justify-content-between align-items-center mt-auto">
+                <small class="text-muted d-none d-sm-block">{{ \App\Models\Hall::where('is_active', true)->count() }} active</small>
                 <small class="text-muted d-sm-none">{{ \App\Models\Hall::where('is_active', true)->count() }} active</small>
                 <a href="{{ route('dashboard.halls') }}" class="text-success">
                     <i class="fas fa-arrow-right"></i>
@@ -72,13 +73,13 @@
     </div>
 
     <div class="col-6 col-md-4 col-xl-3">
-        <div class="stat-card" style="border-left-color: var(--info);">
+        <div class="stat-card h-100" style="border-left-color: var(--info);">
             <div class="stat-icon" style="background-color: rgba(22, 170, 255, 0.1); color: var(--info);">
                 <i class="fas fa-chair"></i>
             </div>
             <h6 class="stat-title">Seats</h6>
             <h3 class="stat-value">{{ \App\Models\Seat::count() }}</h3>
-            <div class="d-flex justify-content-between align-items-center mt-3">
+            <div class="d-flex justify-content-between align-items-center mt-auto">
                 <small class="text-muted d-none d-sm-block">{{ \App\Models\Seat::where('is_available', true)->count() }} available</small>
                 <small class="text-muted d-sm-none">{{ \App\Models\Seat::where('is_available', true)->count() }} avail</small>
                 <a href="{{ route('dashboard.seats') }}" class="text-info">
@@ -89,13 +90,13 @@
     </div>
 
     <div class="col-6 col-md-4 col-xl-3">
-        <div class="stat-card" style="border-left-color: var(--warning);">
+        <div class="stat-card h-100" style="border-left-color: var(--warning);">
             <div class="stat-icon" style="background-color: rgba(247, 185, 36, 0.1); color: var(--warning);">
                 <i class="fas fa-utensils"></i>
             </div>
             <h6 class="stat-title">Concessions</h6>
             <h3 class="stat-value">{{ \App\Models\FoodItem::count() + \App\Models\Drink::count() }}</h3>
-            <div class="d-flex justify-content-between align-items-center mt-3">
+            <div class="d-flex justify-content-between align-items-center mt-auto">
                 <small class="text-muted d-none d-sm-block">{{ \App\Models\FoodItem::count() }} food, {{ \App\Models\Drink::count() }} drinks</small>
                 <small class="text-muted d-sm-none">{{ \App\Models\FoodItem::count() + \App\Models\Drink::count() }} items</small>
                 <a href="{{ route('dashboard.food-items') }}" class="text-warning">
@@ -242,18 +243,18 @@
     <!-- Recent Movies -->
     <div class="col-lg-6 mb-4">
         <div class="card h-100">
-            <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card-header d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2">
                 <h5 class="card-title mb-0">Recent Movies</h5>
                 <a href="{{ route('dashboard.movies') }}" class="btn btn-sm btn-outline-primary">View All</a>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover recent-table mb-0">
                         <thead>
                             <tr>
                                 <th>Movie</th>
-                                <th>Genre</th>
-                                <th>Duration</th>
+                                <th class="d-none d-md-table-cell">Genre</th>
+                                <th class="d-none d-lg-table-cell">Duration</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -261,13 +262,18 @@
                             @php
                                 $movies = \App\Models\Movie::latest()->take(5)->get();
                             @endphp
-                            
+
                             @forelse($movies as $movie)
                                 <tr>
-                                    <td class="fw-medium">{{ $movie->title }}</td>
-                                    <td>{{ $movie->genre }}</td>
-                                    <td>{{ $movie->duration }} min</td>
-                                    <td>
+                                    <td class="fw-medium" data-label="Movie">
+                                        <div>{{ $movie->title }}</div>
+                                        <small class="text-muted d-md-none">
+                                            {{ $movie->genre }} • {{ $movie->duration }} min
+                                        </small>
+                                    </td>
+                                    <td class="d-none d-md-table-cell" data-label="Genre">{{ $movie->genre }}</td>
+                                    <td class="d-none d-lg-table-cell" data-label="Duration">{{ $movie->duration }} min</td>
+                                    <td data-label="Status">
                                         @if($movie->is_showing)
                                             <span class="badge bg-success">Showing</span>
                                         @else
@@ -290,19 +296,19 @@
     <!-- Hall Status -->
     <div class="col-lg-6 mb-4">
         <div class="card h-100">
-            <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card-header d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2">
                 <h5 class="card-title mb-0">Hall Status</h5>
                 <a href="{{ route('dashboard.halls') }}" class="btn btn-sm btn-outline-primary">View All</a>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover recent-table mb-0">
                         <thead>
                             <tr>
                                 <th>Hall</th>
-                                <th>Type</th>
-                                <th>Capacity</th>
-                                <th>Seat Config</th>
+                                <th class="d-none d-md-table-cell">Type</th>
+                                <th class="d-none d-lg-table-cell">Capacity</th>
+                                <th class="d-none d-xl-table-cell">Seat Config</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -313,20 +319,30 @@
                             
                             @forelse($halls as $hall)
                                 <tr>
-                                    <td class="fw-medium">{{ $hall->name }}</td>
-                                    <td>{{ $hall->hall_type }}</td>
-                                    <td>{{ $hall->capacity }}</td>
-                                    <td>
+                                    <td class="fw-medium" data-label="Hall">
+                                        <div>{{ $hall->name }}</div>
+                                        <small class="text-muted d-md-none">
+                                            {{ $hall->hall_type }} • {{ $hall->capacity }} seats •
+                                            @if($hall->is_active)
+                                                <span class="text-success">Active</span>
+                                            @else
+                                                <span class="text-secondary">Inactive</span>
+                                            @endif
+                                        </small>
+                                    </td>
+                                    <td class="d-none d-md-table-cell" data-label="Type">{{ $hall->hall_type }}</td>
+                                    <td class="d-none d-lg-table-cell" data-label="Capacity">{{ $hall->capacity }}</td>
+                                    <td class="d-none d-xl-table-cell" data-label="Seat Config">
                                         @php
                                             $configuredSeats = $hall->seats->count();
                                             $percentage = $hall->capacity > 0 ? round(($configuredSeats / $hall->capacity) * 100) : 0;
                                         @endphp
-                                        <div class="progress" style="width: 80px; height: 6px; margin-bottom: 3px;">
+                                        <div class="progress" style="width: 60px; height: 4px; margin-bottom: 3px;">
                                             <div class="progress-bar bg-primary" role="progressbar" style="width: {{ $percentage }}%" aria-valuenow="{{ $percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                         <small class="text-muted">{{ $configuredSeats }}/{{ $hall->capacity }}</small>
                                     </td>
-                                    <td>
+                                    <td class="d-none d-md-table-cell" data-label="Status">
                                         @if($hall->is_active)
                                             <span class="badge bg-success">Active</span>
                                         @else
