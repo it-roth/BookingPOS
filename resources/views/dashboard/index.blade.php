@@ -308,7 +308,6 @@
                                 <th>Hall</th>
                                 <th class="d-none d-md-table-cell">Type</th>
                                 <th class="d-none d-lg-table-cell">Capacity</th>
-                                <th class="d-none d-xl-table-cell">Seat Config</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -332,16 +331,6 @@
                                     </td>
                                     <td class="d-none d-md-table-cell" data-label="Type">{{ $hall->hall_type }}</td>
                                     <td class="d-none d-lg-table-cell" data-label="Capacity">{{ $hall->capacity }}</td>
-                                    <td class="d-none d-xl-table-cell" data-label="Seat Config">
-                                        @php
-                                            $configuredSeats = $hall->seats->count();
-                                            $percentage = $hall->capacity > 0 ? round(($configuredSeats / $hall->capacity) * 100) : 0;
-                                        @endphp
-                                        <div class="progress" style="width: 60px; height: 4px; margin-bottom: 3px;">
-                                            <div class="progress-bar bg-primary" role="progressbar" style="width: {{ $percentage }}%" aria-valuenow="{{ $percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <small class="text-muted">{{ $configuredSeats }}/{{ $hall->capacity }}</small>
-                                    </td>
                                     <td class="d-none d-md-table-cell" data-label="Status">
                                         @if($hall->is_active)
                                             <span class="badge bg-success">Active</span>

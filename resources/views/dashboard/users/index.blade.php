@@ -3,6 +3,13 @@
 @section('title', 'Users')
 
 @section('content')
+
+<style>
+    thead.table-dark th {
+        background: linear-gradient(90deg, #0047AB, #1E90FF) !important;
+        color: white !important;
+    }
+</style>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -52,14 +59,7 @@
                                            value="{{ request('search') }}"
                                            placeholder="Search by username, name, or email...">
                                 </div>
-                                <div class="col-md-3">
-                                    <label for="role" class="form-label">Filter by Role</label>
-                                    <select class="form-select" id="role" name="role">
-                                        <option value="">All Roles</option>
-                                        <option value="admin" {{ request('role') === 'admin' ? 'selected' : '' }}>Admin</option>
-                                        <option value="user" {{ request('role') === 'user' ? 'selected' : '' }}>User</option>
-                                    </select>
-                                </div>
+                           
                                 <div class="col-md-3">
                                     <label for="status" class="form-label">Filter by Status</label>
                                     <select class="form-select" id="status" name="status">
@@ -115,124 +115,104 @@
                             </button>
                         </div>
                     </div>
-
                     <div class="table-responsive">
-                        <table class="table table-hover table-striped">
-                            <thead class="table-dark">
+                        <table class="table table-hover table-striped align-middle shadow-sm">
+                            <!-- Custom header colors -->
+                            <thead style="background-color: #0047AB; color: white;">
+
                                 <tr>
                                     <th width="50" class="text-center">
                                         <input type="checkbox" id="select-all-checkbox" class="form-check-input">
                                     </th>
                                     <th width="80" class="text-center">Avatar</th>
                                     <th>Username</th>
-                                    <th>Name</th>
                                     <th class="d-none d-md-table-cell">Email</th>
-                                    <th class="text-center">Role</th>
-                                    <th class="text-center">Status</th>
                                     <th width="200" class="text-center">Actions</th>
                                 </tr>
                             </thead>
+
                             <tbody>
-                                @forelse ($users as $user)
-                                    <tr class="align-middle slide-in">
-                                        <td class="text-center">
-                                            <input type="checkbox" class="form-check-input user-checkbox" value="{{ $user->id }}">
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="profile-image-container">
-                                                @if($user->profile_image)
-                                                    <img src="{{ asset($user->profile_image) }}"
-                                                         alt="Profile"
-                                                         class="user-avatar rounded-circle border border-2 border-light shadow-sm"
-                                                         width="45"
-                                                         height="45"
-                                                         style="object-fit: cover;">
-                                                @else
-                                                    <div class="user-avatar rounded-circle bg-gradient bg-secondary text-white d-flex align-items-center justify-content-center shadow-sm"
-                                                         style="width: 45px; height: 45px;">
-                                                        <i class="fas fa-user"></i>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <strong>{{ $user->username }}</strong>
-                                            <br>
-                                            <small class="text-muted">ID: {{ $user->id }}</small>
-                                        </td>
-                                        <td>
-                                            <div>{{ $user->name }}</div>
-                                            <small class="text-muted">
-                                                Created: {{ $user->created_at->format('M d, Y') }}
-                                            </small>
-                                        </td>
-                                        <td class="d-none d-md-table-cell">
-                                            <div>{{ $user->email }}</div>
-                                            <small class="text-muted">
-                                                Updated: {{ $user->updated_at->format('M d, Y') }}
-                                            </small>
-                                        </td>
-                                        <td class="text-center">
-                                            <span class="badge bg-{{ $user->role === 'admin' ? 'danger' : 'info' }} fs-6 px-3 py-2">
-                                                <i class="fas fa-{{ $user->role === 'admin' ? 'crown' : 'user' }} me-1"></i>
-                                                {{ ucfirst($user->role) }}
-                                            </span>
-                                        </td>
-                                        <td class="text-center">
-                                            <span class="badge bg-{{ $user->is_active ? 'success' : 'warning' }} fs-6 px-3 py-2">
-                                                <i class="fas fa-{{ $user->is_active ? 'check-circle' : 'pause-circle' }} me-1"></i>
-                                                {{ $user->is_active ? 'Active' : 'Inactive' }}
-                                            </span>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="btn-group" role="group">
-                                                <a href="{{ route('dashboard.users.show', $user->id) }}"
-                                                   class="btn btn-outline-info btn-sm"
-                                                   title="View Details">
-                                                    <i class="fas fa-eye"></i>
+                            @forelse ($users as $user)
+                                <tr class="slide-in">
+                                    <td class="text-center">
+                                        <input type="checkbox" class="form-check-input user-checkbox" value="{{ $user->id }}">
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="profile-image-container">
+                                            @if($user->profile_image)
+                                                <img src="{{ asset($user->profile_image) }}"
+                                                    alt="Profile"
+                                                    class="user-avatar rounded-circle border border-2 border-light shadow-sm"
+                                                    width="45"
+                                                    height="45"
+                                                    style="object-fit: cover;">
+                                            @else
+                                                <div class="user-avatar rounded-circle bg-gradient bg-secondary text-white d-flex align-items-center justify-content-center shadow-sm"
+                                                    style="width: 45px; height: 45px;">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <strong class="text-primary">{{ $user->username }}</strong>
+                                    </td>
+                                    <td class="d-none d-md-table-cell">
+                                        <div class="text-dark">{{ $user->email }}</div>
+                                        <small class="text-muted">
+                                            Updated: {{ $user->updated_at->format('M d, Y') }}
+                                        </small>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group">
+                                            <a href="{{ route('dashboard.users.show', $user->id) }}"
+                                            class="btn btn-sm btn-outline-info"
+                                            title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="{{ route('dashboard.users.edit', $user->id) }}"
+                                            class="btn btn-sm btn-outline-primary"
+                                            title="Edit User">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-danger delete-user"
+                                                    data-user-id="{{ $user->id }}"
+                                                    data-username="{{ $user->username }}"
+                                                    title="Delete User"
+                                                    onclick="if(confirm('Delete {{ $user->username }}?')) { document.getElementById('delete-form-{{ $user->id }}').submit(); }">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                        <form id="delete-form-{{ $user->id }}"
+                                            action="{{ route('dashboard.users.destroy', $user->id) }}"
+                                            method="POST"
+                                            class="d-none">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="8" class="text-center py-5">
+                                        <div class="text-muted">
+                                            <i class="fas fa-users fa-3x mb-3"></i>
+                                            <h5>No users found</h5>
+                                            <p>{{ request()->hasAny(['search', 'role', 'status']) ? 'Try adjusting your search criteria.' : 'Start by creating your first user.' }}</p>
+                                            @if(!request()->hasAny(['search', 'role', 'status']))
+                                                <a href="{{ route('dashboard.users.create') }}" class="btn btn-primary">
+                                                    <i class="fas fa-plus"></i> Create First User
                                                 </a>
-                                                <a href="{{ route('dashboard.users.edit', $user->id) }}"
-                                                   class="btn btn-outline-primary btn-sm"
-                                                   title="Edit User">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <button type="button"
-                                                        class="btn btn-outline-danger btn-sm delete-user"
-                                                        data-user-id="{{ $user->id }}"
-                                                        data-username="{{ $user->username }}"
-                                                        title="Delete User"
-                                                        onclick="console.log('Direct onclick triggered for user {{ $user->id }}'); if(confirm('Delete {{ $user->username }}?')) { document.getElementById('delete-form-{{ $user->id }}').submit(); }">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                            <form id="delete-form-{{ $user->id }}"
-                                                  action="{{ route('dashboard.users.destroy', $user->id) }}"
-                                                  method="POST"
-                                                  class="d-none">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="8" class="text-center py-5">
-                                            <div class="text-muted">
-                                                <i class="fas fa-users fa-3x mb-3"></i>
-                                                <h5>No users found</h5>
-                                                <p>{{ request()->hasAny(['search', 'role', 'status']) ? 'Try adjusting your search criteria.' : 'Start by creating your first user.' }}</p>
-                                                @if(!request()->hasAny(['search', 'role', 'status']))
-                                                    <a href="{{ route('dashboard.users.create') }}" class="btn btn-primary">
-                                                        <i class="fas fa-plus"></i> Create First User
-                                                    </a>
-                                                @endif
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforelse
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
                     </div>
+
 
                     @if($users->hasPages())
                         <div class="mt-4">
@@ -248,46 +228,4 @@
 
 @push('scripts')
 <script src="{{ asset('js/users.js') }}"></script>
-<!-- <script>
-// Additional debugging and fallback
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Inline script loaded');
-    console.log('SweetAlert2 available:', typeof Swal !== 'undefined');
-
-    // Fallback event listener if the main one doesn't work
-    setTimeout(function() {
-        const deleteButtons = document.querySelectorAll('.delete-user');
-        console.log('Fallback check - Delete buttons found:', deleteButtons.length);
-
-        deleteButtons.forEach(function(button, index) {
-            console.log(`Button ${index}:`, button);
-
-            // Remove any existing listeners and add a new one
-            button.removeEventListener('click', handleDeleteClick);
-            button.addEventListener('click', handleDeleteClick);
-        });
-    }, 1000);
-
-    function handleDeleteClick(e) {
-        e.preventDefault();
-        console.log('Delete button clicked!', this);
-
-        const userId = this.dataset.userId;
-        const username = this.dataset.username;
-
-        console.log('User ID:', userId, 'Username:', username);
-
-        if (confirm(`Are you sure you want to delete user "${username}"?`)) {
-            const form = document.getElementById(`delete-form-${userId}`);
-            if (form) {
-                console.log('Submitting form:', form);
-                form.submit();
-            } else {
-                console.error('Form not found!');
-                alert('Error: Could not find delete form');
-            }
-        }
-    }
-});
-</script> -->
 @endpush
